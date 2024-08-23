@@ -76,4 +76,13 @@ export class AuthService {
       
   }
 
+  async CheckAuth(user: User) { 
+
+    return {
+      ...user,
+      token: this.getJwtToken({ name:user.fullname,id:user.id })
+    };
+    
+  }
+
 }
