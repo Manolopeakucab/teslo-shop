@@ -6,7 +6,10 @@ import { PaginationDto } from './../common/dtos/pagination.dto';
 import { CompositionDecorator, GetUser } from 'src/auth/decorators';
 import { ValidRoles } from 'src/auth/interfaces/Valid_Roles';
 import { User } from 'src/auth/entities/user.entity';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Product } from './entities/product.entity';
 
+@ApiTags('Products')
 @Controller('products')
 
 export class ProductsController {
@@ -14,6 +17,8 @@ export class ProductsController {
 
   @Post()
   @CompositionDecorator()
+  @ApiResponse({ status: 201, description: 'Product was created', type: Product})
+  @ApiResponse({ status: 400, description: 'Error'})
    create(@Body() createProductDto: CreateProductDto,
   @GetUser()user: User,) {
     return this.productsService.create(createProductDto, user);
